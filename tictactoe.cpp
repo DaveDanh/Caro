@@ -138,105 +138,117 @@ void drawLogo(){
 
 
 int main(){
-    drawLogo();
-    int space = 0;
-    bool turn = true;
-    int col;
-    int con;
-    int mode;
-    cout << "Enter the size of the board: ";
-    cin >> col;
-    cout << "Condition to win: ";
-    cin >> con;
-    cout << "Play with who?" << endl;
-    cout << "1. Comp" << endl;
-    cout << "2. Friend" << endl;
-    cin >> mode;
-    system("cls");
-    system("color 0F");
-    printBoard(col);
-    int curX = 3;
-    int curY = 2;
-    int maxY = 3*col-2;
-    int maxX = 6*col-3;
-    char board[12][12];
-    for (int i = 0; i < col; i++) {
-        for (int j = 0; j < col; j++) {
-            board[i][j] = ' ';
-        }
-    }
-    while (space < col*col){
-        gotoxy(0,3*col+2);
-        if (turn == true){
-            cout << "X turn";
-        }
-        else{
-            cout << "O turn";
-        }
-        gotoxy(curX,curY);
-        char ch = _getch();
-        if (ch == 's' && curY<maxY){
-            curY = curY + 3;
-        }
-        else if (ch == 'w' && curY>2){
-            curY = curY - 3;
-        }
-        else if (ch == 'd' && curX<maxX){
-            curX = curX + 6;
-        }
-        else if (ch == 'a' && curX>3){
-            curX = curX - 6;
-        }
-        else if (ch == '\r'){
-            int boardX = (curX-3)/6;
-            int boardY = (curY-2)/3;
-            if (board[boardX][boardY] == ' '){  
-                if (turn == true){    
-                    cout << 'X';
-                    turn = false;
-                    board[boardX][boardY] = 'X';
-                    if (CheckWin(board, col,con,'X')){
-                        gotoxy(0,3*col+2);
-                        cout << "X IS THE WINNER";
-                        exit(EXIT_SUCCESS);
-                    }
-                    if (mode == 1){    
-                        while (true){    
-                                int CompX = rand() % (col + 1);
-                                int CompY = rand() % (col + 1);
-                                if (board[CompX][CompY] == ' '){
-                                    board[CompX][CompY] = 'O';
-                                    gotoxy(CompX*6+3,CompY*3+2);
-                                    cout << 'O';
-                                    turn = true;
-                                    if (CheckWin(board, col,con,'O')){
-                                        gotoxy(0,3*col+2);
-                                        cout << "O IS THE WINNER";
-                                        exit(EXIT_SUCCESS);
-                                    }
-                                break;
-                                }
-                            }
-                    }
-                }
-
-                else{
-                    if (mode ==  2){    
-                        cout << 'O';
-                        turn = true;
-                        board[boardX][boardY] = 'O';
-                        if (CheckWin(board, col,con,'O')){
-                            gotoxy(0,3*col+2);
-                            cout << "O IS THE WINNER";
-                            exit(EXIT_SUCCESS);
-                        }
-                    }
-                }
-                space++;
+    int regame = 1;
+    do {    
+        drawLogo();
+        int space = 0;
+        bool turn = true;
+        int col;
+        int con;
+        int mode;
+        cout << "Enter the size of the board: ";
+        cin >> col;
+        cout << "Condition to win: ";
+        cin >> con;
+        cout << "Play with who?" << endl;
+        cout << "1. Comp" << endl;
+        cout << "2. Friend" << endl;
+        cin >> mode;
+        system("cls");
+        system("color 0F");
+        printBoard(col);
+        int curX = 3;
+        int curY = 2;
+        int maxY = 3*col-2;
+        int maxX = 6*col-3;
+        char board[12][12];
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < col; j++) {
+                board[i][j] = ' ';
             }
         }
-    }
+        while (space < col*col){
+            gotoxy(0,3*col+2);
+            if (turn == true){
+                cout << "X turn";
+            }
+            else{
+                cout << "O turn";
+            }
+            gotoxy(curX,curY);
+            char ch = _getch();
+            if (ch == 's' && curY<maxY){
+                curY = curY + 3;
+            }
+            else if (ch == 'w' && curY>2){
+                curY = curY - 3;
+            }
+            else if (ch == 'd' && curX<maxX){
+                curX = curX + 6;
+            }
+            else if (ch == 'a' && curX>3){
+                curX = curX - 6;
+            }
+            else if (ch == '\r'){
+                int boardX = (curX-3)/6;
+                int boardY = (curY-2)/3;
+                if (board[boardX][boardY] == ' '){  
+                    if (turn == true){    
+                        cout << 'X';
+                        turn = false;
+                        board[boardX][boardY] = 'X';
+                        if (CheckWin(board, col,con,'X')){
+                            gotoxy(0,3*col+2);
+                            cout << "X IS THE WINNER";
+                            exit(EXIT_SUCCESS);
+                        }
+                        if (mode == 1){    
+                            while (true){    
+                                    int CompX = rand() % (col + 1);
+                                    int CompY = rand() % (col + 1);
+                                    if (board[CompX][CompY] == ' '){
+                                        board[CompX][CompY] = 'O';
+                                        gotoxy(CompX*6+3,CompY*3+2);
+                                        cout << 'O';
+                                        turn = true;
+                                        if (CheckWin(board, col,con,'O')){
+                                            gotoxy(0,3*col+2);
+                                            cout << "O IS THE WINNER";
+                                            break;
+                                        }
+                                    break;
+                                    }
+                                }
+                        }
+                    }
+
+                    else{
+                        if (mode ==  2){    
+                            cout << 'O';
+                            turn = true;
+                            board[boardX][boardY] = 'O';
+                            if (CheckWin(board, col,con,'O')){
+                                gotoxy(0,3*col+2);
+                                cout << "O IS THE WINNER";
+                                break;
+                            }
+                        }
+                    }
+                    space++;
+                }
+            }
+        }
+        if (!CheckWin(board, col,con,'O')){
+            gotoxy(0,3*col+2);
+            cout << "A DRAW GAME" << endl;
+        }
+        cout << "Do you want to play again?";
+        cout << endl << "1.YES";
+        cout << endl << "2.NO" << endl;
+        cin >> regame;
+        if (regame == 2){
+            exit(EXIT_SUCCESS);
+        }
+    } while(regame == 1);
     
-    gotoxy(0,3*col+2);
-    cout << "A DRAW GAME";
 }
