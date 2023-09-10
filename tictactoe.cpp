@@ -3,6 +3,8 @@
 #include<iostream>
 #include <conio.h>
 #include <cstdlib>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -117,6 +119,275 @@ bool CheckWin(char board[][12], int col, int k, char player){
     
 }
 
+int minimax(char board[][12],int col, int k){
+    int usefulmove[100] = {0};
+    int counter = 0;
+    int temp;
+    int point[100] = {0};
+    for (int i =0 ; i<col;i++){
+        for (int j=0;j < col;j++){
+            if (board[i][j] == 'X' or board[i][j] == 'O'){
+                if (i != 0 or j != 0 or i!=col-1 or j!=col-1){
+                    if (board[i+1][j+1] == ' '){
+                        temp = col*(i+1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+j;
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i+1][j-1] == ' '){
+                        temp = col*(i+1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i-1][j-1] == ' '){
+                        temp = col*(i-1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+j;
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                    if (board[i-1][j+1] == ' '){
+                        temp = col*(i-1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                    }
+                }
+                else{
+                    if (i == 0 && j == 0){
+                        if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j+1] == ' '){
+                        temp = col*(i+1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (i == col-1 && j == col-1){
+                        if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j-1] == ' '){
+                        temp = col*(i-1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (i == 0 && j == col-1){
+                        if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j-1] == ' '){
+                        temp = col*(i+1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (i == col-1 && j == 0){
+                        if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j+1] == ' '){
+                        temp = col*(i-1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (i == 0){
+                        if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j-1] == ' '){
+                        temp = col*(i+1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j+1] == ' '){
+                        temp = col*(i+1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (i == col-1){
+                        if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j-1] == ' '){
+                        temp = col*(i-1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j+1] == ' '){
+                        temp = col*(i-1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (j == 0){
+                        if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j+1] == ' '){
+                        temp = col*(i-1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j+1] == ' '){
+                        temp = col*(i)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j+1] == ' '){
+                        temp = col*(i+1)+(j+1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                    else if (j == col-1){
+                        if (board[i-1][j] == ' '){
+                        temp = col*(i-1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j] == ' '){
+                        temp = col*(i+1)+(j);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i-1][j-1] == ' '){
+                        temp = col*(i-1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i][j-1] == ' '){
+                        temp = col*(i)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                        if (board[i+1][j-1] == ' '){
+                        temp = col*(i+1)+(j-1);
+                        usefulmove[counter] = temp;
+                        counter++;
+                        }
+                    }
+                }
+            
+            }
+        }
+    }
+    for (int a=0;a<counter;a++){
+        board[usefulmove[a] / col][usefulmove[a] % col] = 'O';
+        if (CheckWin(board, col , k , 'O')){
+            point[a] = 1;
+        }
+        else{
+            board[usefulmove[a] / col][usefulmove[a] % col] = 'X';
+            if (CheckWin(board, col , k , 'X')){
+                point[a] = -1;
+            }
+            else{
+                point[a] = 0;
+            }   
+            board[usefulmove[a] / col][usefulmove[a] % col] = ' ';
+        }
+    }
+
+    int ma = *max_element(begin(point),end(point));
+    if (ma == 0){
+        int mi = *min_element(begin(point),end(point));
+        for (int b=0;b<counter;b++){
+            if (point[b]==mi){
+                return usefulmove[b];
+                break;
+            }
+        }
+    }
+    else{
+        for (int b=0;b<counter;b++){
+            if (point[b]==ma){
+                return usefulmove[b];
+                break;
+            }
+        }
+    }
+
+}
 
 void drawLogo(){
     system("cls");
@@ -146,7 +417,7 @@ int main(){
         bool turn = true;
         int col;
         int con=15;
-        int mode;    
+        int mode=0;    
         cout << "Enter the size of the board: ";
         cin >> col;
         while (con > col ){
@@ -204,46 +475,43 @@ int main(){
                         board[boardX][boardY] = 'X';
                         if (CheckWin(board, col,con,'X')){
                             gotoxy(0,3*col+2);
-                            cout << "X IS THE WINNER";
-                            exit(EXIT_SUCCESS);
+                            cout << "X IS THE WINNER" << endl;
+                            break;
                         }
                         if (mode == 1){    
-                            while (true){    
-                                    int CompX = rand() % (col + 1);
-                                    int CompY = rand() % (col + 1);
-                                    if (board[CompX][CompY] == ' '){
-                                        board[CompX][CompY] = 'O';
-                                        gotoxy(CompX*6+3,CompY*3+2);
-                                        cout << 'O';
-                                        turn = true;
-                                        if (CheckWin(board, col,con,'O')){
-                                            gotoxy(0,3*col+2);
-                                            cout << "O IS THE WINNER";
-                                            break;
-                                        }
+                             
+                                int selec = minimax(board,col,con);
+                                board[selec/col][selec%col] = 'O';
+                                gotoxy((selec/col)*6+3,(selec%col)*3+2);
+                                cout << 'O';
+                                turn = true;
+                                space++;
+                                if (CheckWin(board, col,con,'O')){
+                                    gotoxy(0,3*col+2);
+                                    cout << "O IS THE WINNER" << endl;
                                     break;
-                                    }
                                 }
+                            
+
                         }
                     }
-
-                    else{
-                        if (mode ==  2){    
-                            cout << 'O';
-                            turn = true;
-                            board[boardX][boardY] = 'O';
-                            if (CheckWin(board, col,con,'O')){
-                                gotoxy(0,3*col+2);
-                                cout << "O IS THE WINNER";
-                                break;
+                        else{
+                            if (mode ==  2){    
+                                cout << 'O';
+                                turn = true;
+                                board[boardX][boardY] = 'O';
+                                if (CheckWin(board, col,con,'O')){
+                                    gotoxy(0,3*col+2);
+                                    cout << "O IS THE WINNER" << endl;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    space++;
+                }
+                space++;
                 }
             }
-        }
-        if (!CheckWin(board, col,con,'O')){
+        if (!CheckWin(board, col,con,'O') && !CheckWin(board, col,con,'X')){
             gotoxy(0,3*col+2);
             cout << "A DRAW GAME" << endl;
         }
